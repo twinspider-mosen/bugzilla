@@ -1,0 +1,9 @@
+<h1>Available Bugs</h1>
+<ul>
+	<% @bugs.each do |bug| %>
+	<li>
+		<%= link_to bug.title , bug%>
+	</li>
+	<%end%>
+</ul>
+<%= link_to "Create New Bug", new_bug_path %>

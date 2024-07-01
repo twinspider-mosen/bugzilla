@@ -1,0 +1,13 @@
+<h1><%=@bug.title%></h1>
+<p><%=@bug.body%></p>
+
+
+<p> <%= link_to "Edit", edit_bug_path(@bug)%></p>
+<p>
+	 <%= link_to "Delete Project", bug_path(@bug), data: {
+	turbo_method: :delete,
+	turbo_confirm: "Are you sure?"
+
+}%>
+</p>
+<p><%= link_to "Go back to home", root_url%></p>

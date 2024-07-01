@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ProjectManagement</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body>
+    <% flash.each do |key, message| %>
+  <div class="alert alert-<%= key %> alert-dismissible fade show" role="alert">
+    <%= message %>
+  </div>
+<% end %>
+
+     <% if user_signed_in? %>
+     <p> <strong>User:&nbsp;</strong><%= current_user.email %>&nbsp; <strong>Role:&nbsp;</strong><%= current_user.role %>&nbsp; </p>
+     <p><%=link_to "Edit Profile", edit_user_registration_path%>&nbsp; <%=link_to "Logout", destroy_user_session_path%></p>
+     <%end%> 
+    <%= yield %>
+  </body>
+</html>
