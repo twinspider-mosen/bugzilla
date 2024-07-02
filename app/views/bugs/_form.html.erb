@@ -15,6 +15,14 @@
     <% end %>
   </div>
 
+   <div>
+    <%= form.label :developer_id, 'Assign Developer' %><br>
+    <% @developers.each do |developer| %>
+      <%= form.radio_button :developer_id, developer.id %>
+      <%= form.label "developer_#{developer.id}", developer.email %><br>
+    <% end %>
+  </div>
+
   <div>
     <%= form.submit %>
   </div>

@@ -15,6 +15,25 @@
     <% end %>
   </div>
 
+    <%# <div> %>
+  
+   <div>
+    <%= form.label :qas, 'Select QAs' %><br>
+    <% User.where(role: 'qa').each do |qa| %>
+      <% checked = @project.user.exists?(qa.id) %>
+      <%= check_box_tag 'project[user_ids][]', qa.id, checked %>
+      <%= label_tag "project_user_ids_#{qa.id}", qa.email %><br>
+    <% end %>
+  </div>
+   
+   <%#  <%= form.label :user_ids, 'Select Users' %><br>
+   <%#   <%= form.collection_select :user_ids, User.where(role: 'qa'), :id, :email, {}, { multiple: true } %>
+
+  <%# </div> %>
+
+  
+
+
   <div>
     <%= form.submit %>
   </div>

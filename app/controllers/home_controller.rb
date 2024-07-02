@@ -7,7 +7,7 @@ class HomeController < ApplicationController
   elsif current_user.qa?
     redirect_to projects_path
   elsif current_user.developer?
-    redirect_to bugs_path
+    redirect_to projects_path
   else
     redirect_to 'home#index'
       

@@ -1,8 +1,14 @@
 <h1><%=@project.title%></h1>
 <p><%=@project.description%></p>
 
+<% if current_user.manager? %>
+<h3>Assigned QAs</h3>
+<p>
+	<%@project.user.each do |usr|%>
+	<li><%= usr.email%></li>
+	<%end%>
 
-<p> <%= link_to "Edit", edit_project_path(@project)%></p>
+	<p> <%= link_to "Edit", edit_project_path(@project)%></p>
 <p>
 	 <%= link_to "Delete Project", project_path(@project), data: {
 	turbo_method: :delete,
@@ -10,4 +16,8 @@
 
 }%>
 </p>
+
+</p>
+<%end%>
+<%= link_to "Create new bug", new_bug_path%>
 <p><%= link_to "Go back to home", root_url%></p>
