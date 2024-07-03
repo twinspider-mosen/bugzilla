@@ -6,15 +6,15 @@ class User < ApplicationRecord
 
   validates :role, presence: true  
 
-  has_many :bugs_created, class_name: 'Bug', foreign_key: 'qa_id', dependent: :nullify
-  has_many :bugs_assigned, class_name: 'Bug', foreign_key: 'developer_id', dependent: :nullify
+  has_many :bugs_created, class_name: 'Bug', foreign_key: 'qa_id', dependent: :destroy
+  has_many :bugs_assigned, class_name: 'Bug', foreign_key: 'developer_id', dependent: :destroy
 
-     has_many :project_assignments
-    has_many :managed_projects , class_name: "Project", foreign_key: 'manager_id'
-    has_many :projects, through: :project_assignments
+     has_many :project_assignments, dependent: :destroy
+    has_many :managed_projects , class_name: "Project", foreign_key: 'manager_id' ,dependent: :destroy
+    has_many :projects, through: :project_assignments, dependent: :destroy
 
   # has_many :assigned_projects, through: :project_assignments, source: :project
-  has_many :assigned_bugs, class_name: 'Bug', foreign_key: 'developer_id'
+  has_many :assigned_bugs, class_name: 'Bug', foreign_key: 'developer_id', dependent: :destroy
   scope :qas, -> { where(role: 'qa') }
 
    def qa?

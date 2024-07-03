@@ -3,13 +3,7 @@ class BugsController < ApplicationController
   load_and_authorize_resource
 
   def index
-    if current_user.qa?
-      @bugs = current_user.bugs_created.includes(:developer, :project)
-    elsif current_user.developer?
-      @bugs = current_user.bugs_assigned.includes(:qa, :project)
-    else
-      @bugs = Bug.all.includes(:qa, :developer, :project)
-    end
+    @bugs = current_user.bugs_assigned
   end
 
   def show
@@ -19,24 +13,26 @@ class BugsController < ApplicationController
   def new
     @bug = Bug.new
     @projects = current_user.projects if current_user.qa?
-         @developers = User.with_role(:developer)
+    @project = Project.find(params[:project_id]) if params[:project_id]
+
+    @developers = User.developer.all
   end
 
   def create 
-    @bug = Bug.new(bug_params)
-    @bug.qa = current_user if current_user.qa?
+  @bug = Bug.new(bug_params)
+  @bug.qa = current_user if current_user.qa?
 
-    if @bug.save
-      redirect_to @bug, notice: 'Bug was successfully created.'
-    else
-      render :new, status: :unprocessable_entity
-    end
+  if @bug.save
+    redirect_to @bug, notice: 'Bug was successfully created.'
+  else
+        puts @bug.errors.full_messages  # Print errors to console for debugging
+
+    render :new, status: :unprocessable_entity
   end
+end
 
   def edit
     @bug = Bug.find(params[:id])
-         @developers = User.with_role(:developer)
-    @projects = current_user.projects if current_user.qa?
   end
 
   def update
@@ -59,6 +55,6 @@ class BugsController < ApplicationController
   private
 
   def bug_params
-    params.require(:bug).permit(:title, :description, :project_id, :developer_id)
+    params.require(:bug).permit(:title, :body, :project_id, :developer_id)
   end
 end

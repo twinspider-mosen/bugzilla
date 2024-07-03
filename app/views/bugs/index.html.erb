@@ -6,4 +6,10 @@
 	</li>
 	<%end%>
 </ul>
+<% if !current_user.developer? %>
 <%= link_to "Create New Bug", new_bug_path %>
+<%else%>
+<p> No Bugs Available!</p>
+<%end%>
+
+

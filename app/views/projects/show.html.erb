@@ -18,6 +18,25 @@
 </p>
 
 </p>
+
+
+
+
 <%end%>
-<%= link_to "Create new bug", new_bug_path%>
+<% if @bugs.empty?%>
+<%else%>
+<h3>Bug Found!</h3>
+
+<p> <% @bugs.each do |bug|%>
+	<div>Title: <%= bug.title %><br>Description: <%= bug.body %> <br> Created by: <%= bug.qa.email %>  </div>	<hr/>
+	<%end%>
+</p>	
+
+<%end%>
+
+
+
+<%# <%= link_to "Create new bug", new_bug_path%>
+<%= link_to "Create new bug", new_bug_path(project_id: @project.id) %>
+
 <p><%= link_to "Go back to home", root_url%></p>

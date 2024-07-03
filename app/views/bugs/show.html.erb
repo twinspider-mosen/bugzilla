@@ -3,11 +3,13 @@
 
 
 <p> <%= link_to "Edit", edit_bug_path(@bug)%></p>
+<% if !current_user.developer? %>
 <p>
-	 <%= link_to "Delete Project", bug_path(@bug), data: {
+	 <%= link_to "Delete Bug", bug_path(@bug), data: {
 	turbo_method: :delete,
 	turbo_confirm: "Are you sure?"
 
 }%>
 </p>
+<%end%>
 <p><%= link_to "Go back to home", root_url%></p>

@@ -6,6 +6,7 @@
       <div><%= message %></div>
     <% end %>
   </div>
+  <%= form.hidden_field :project_id, value: @project.id if @project %>
 
   <div>
     <%= form.label :body %><br>
@@ -14,15 +15,15 @@
       <div><%= message %></div>
     <% end %>
   </div>
-
+<% if !current_user.developer? %>
    <div>
     <%= form.label :developer_id, 'Assign Developer' %><br>
-    <% @developers.each do |developer| %>
+    <% User.developer.map do |developer| %>
       <%= form.radio_button :developer_id, developer.id %>
       <%= form.label "developer_#{developer.id}", developer.email %><br>
     <% end %>
   </div>
-
+<%end%>
   <div>
     <%= form.submit %>
   </div>

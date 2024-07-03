@@ -5,5 +5,5 @@ class Bug < ApplicationRecord
   belongs_to :developer, class_name: 'User', foreign_key: 'developer_id' , optional: true
 
   validates :title, presence: true
-  validates :body, presence: true, length: { minimum: 10 }
+  # validates :body, presence: true, length: { minimum: 10 }
 end
