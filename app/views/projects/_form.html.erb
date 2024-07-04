@@ -19,7 +19,7 @@
   
    <div>
     <%= form.label :qas, 'Select QAs' %><br>
-    <% User.where(role: 'qa').each do |qa| %>
+    <% User.where(role: ['qa', 'developer']).each do |qa| %>
       <% checked = @project.user.exists?(qa.id) %>
       <%= check_box_tag 'project[user_ids][]', qa.id, checked %>
       <%= label_tag "project_user_ids_#{qa.id}", qa.email %><br>

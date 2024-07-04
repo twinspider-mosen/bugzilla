@@ -3,13 +3,14 @@ class ProjectsController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @qas = User.where(role: 'qa')
+    # @qas = User.where(role: 'qa')
 
     @projects = current_user.managed_projects if current_user.manager?
     @projects = current_user.projects if current_user.qa?
-    if current_user.developer?
-      redirect_to bugs_url
-    end
+    @projects = current_user.projects if current_user.developer?
+    # if current_user.developer?
+    #   redirect_to bugs_url
+    # end
 
     # @projects = current_user.projects if current_user.developer?
   end

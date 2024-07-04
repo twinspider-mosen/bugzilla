@@ -3,8 +3,9 @@ Rails.application.routes.draw do
 
   resources :projects
 
-  resources :bugs
-
+  resources :bugs do
+   
+  end
 
 devise_for :users, controllers: {
   registrations: 'users/registrations',

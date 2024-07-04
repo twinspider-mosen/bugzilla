@@ -1,5 +1,13 @@
 <%= form_with model: @bug do |form| %>
   <div>
+    <%= form.label :type %><br>
+    <%= form.select :bug_type, Bug.bug_types.keys.map { |t| [t.humanize, t] } %>
+  </div>
+   <div class="field">
+    <%= form.label :status %><br>
+    <%= form.select :status, Bug.statuses.keys.map { |status| [status.humanize, status] }, { include_blank: false } %>
+  </div>
+  <div>
     <%= form.label :title %><br>
     <%= form.text_field :title %>
       <% @bug.errors.full_messages_for(:title).each do |message| %>
@@ -15,16 +23,31 @@
       <div><%= message %></div>
     <% end %>
   </div>
-<% if !current_user.developer? %>
-   <div>
-    <%= form.label :developer_id, 'Assign Developer' %><br>
-    <% User.developer.map do |developer| %>
-      <%= form.radio_button :developer_id, developer.id %>
-      <%= form.label "developer_#{developer.id}", developer.email %><br>
-    <% end %>
+    <div>
+    <%= form.label :image, 'Upload Image(.png or .gif only)' %> <br>
+    <%= form.file_field :image, accept: 'image/png,image/gif' %>
+    <% @bug.errors.full_messages_for(:image).each do |message| %>
+      <div><%= message %></div>
+          <% end %>
+
   </div>
-<%end%>
   <div>
     <%= form.submit %>
   </div>
 <% end %>
+
+  <%#
+<% if !current_user.developer? %>
+  <%# <div>
+    <%= form.label :developer_id, 'Assign Developer' %><br>
+ <%#   <% User.developer.map do |developer| %>
+ <%#     <%= form.radio_button :developer_id, developer.id %>
+ <%#     <%= form.label "developer_#{developer.id}", developer.email %><br>
+ <%#   <% end %>
+  <%#</div>
+<%end%>
+  
+  
+
+
+  

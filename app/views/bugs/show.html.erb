@@ -1,5 +1,11 @@
 <h1><%=@bug.title%></h1>
+
+
 <p><%=@bug.body%></p>
+<% if @bug.image.attached? %>
+	  <%= image_tag url_for(@bug.image) , width: 200, height: 200%>
+
+<%end%>
 
 
 <p> <%= link_to "Edit", edit_bug_path(@bug)%></p>
@@ -12,4 +18,14 @@
 }%>
 </p>
 <%end%>
+
+
+
+<%= form_for @bug, url: bug_path(@bug), method: :patch do |f| %>
+  <div class="form-group w-25">
+    <%= f.label :status, "Change Status:" %>
+    <%= f.select :status, Bug.statuses.keys.map { |status| [status.humanize, status] }, {}, class: 'form-control' %>
+  </div>
+  <%= f.submit "Update Status", class: 'btn btn-primary btn-sm' %>
+<% end %>
 <p><%= link_to "Go back to home", root_url%></p>

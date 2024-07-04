@@ -44,17 +44,36 @@ end
       render :edit, status: :unprocessable_entity
     end
   end
-
-  def destroy
+  def update_status
     @bug = Bug.find(params[:id])
-    @bug.destroy
+    new_status = params[:status].to_sym  # Convert status to symbol
 
-    redirect_to bugs_url, notice: 'Bug was successfully destroyed.'
+    if @bug.update(status: new_status)
+      render json: { message: 'Bug status updated successfully' }
+    else
+      render json: { error: @bug.errors.full_messages.join(', ') }, status: :unprocessable_entity
+    end
   end
+
+  # def destroy
+  #   @bug = Bug.find(params[:id])
+  #   @bug.destroy
+
+  #   redirect_to bugs_url, notice: 'Bug was successfully destroyed.'
+  # end
+  def destroy
+  @bug = Bug.find(params[:id])
+  if @bug.destroy
+    redirect_to bugs_url, notice: 'Bug was successfully destroyed.'
+  else
+    Rails.logger.debug { "Failed to destroy bug: #{@bug.errors.full_messages.join(', ')}" }
+    redirect_to bugs_url, alert: 'Failed to destroy bug.'
+  end
+end
 
   private
 
   def bug_params
-    params.require(:bug).permit(:title, :body, :project_id, :developer_id)
+    params.require(:bug).permit(:title, :body, :project_id, :developer_id, :image,:status)
   end
 end
