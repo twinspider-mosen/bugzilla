@@ -4,16 +4,41 @@ class ProjectsController < ApplicationController
 
   def index
     # @qas = User.where(role: 'qa')
+    if current_user.manager?
+      @projects = current_user.managed_projects
+    else
+      @projects = current_user.projects
+  end
 
-    @projects = current_user.managed_projects if current_user.manager?
-    @projects = current_user.projects if current_user.qa?
-    @projects = current_user.projects if current_user.developer?
+    # @projects = current_user.managed_projects if current_user.manager?
+    # @projects = current_user.projects if current_user.qa?
+    # @projects = current_user.projects if current_user.developer?
     # if current_user.developer?
     #   redirect_to bugs_url
     # end
 
     # @projects = current_user.projects if current_user.developer?
   end
+  def search
+    @projects = if params[:query].present?
+                  Project.where('title LIKE ?', "%#{params[:query]}%")
+                else
+                  Project.all
+                end
+    render :index
+  end
+  #  def search
+  #   @projects = if params[:query].present?
+  #                 Project.where('title LIKE ?', "%#{params[:query]}%")
+  #               else
+  #                 Project.none
+  #               end
+
+  #   respond_to do |format|
+  #     format.html { render partial: 'search_results' } # Render the partial for HTML requests
+  #     format.js   # Render search.js.erb for JS requests
+  #   end
+  # end
 
   def show
     # Load and authorize the specific project
@@ -26,7 +51,10 @@ class ProjectsController < ApplicationController
     @project.project_assignments.build
 
   end
-
+    def hello
+      # puts  'Hellow'
+     HelloJob.perform_at(10.seconds.from_now)
+    end
   def create
     @project = Project.new(project_params)
     @project.manager_id = current_user.id

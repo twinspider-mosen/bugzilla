@@ -54,6 +54,16 @@ end
       render json: { error: @bug.errors.full_messages.join(', ') }, status: :unprocessable_entity
     end
   end
+def assign_developer
+  @bug = Bug.find(params[:id]) # Use :id to fetch the bug record
+
+  if @bug.update(developer_id: current_user.id)
+    redirect_to @bug, notice: 'You have been assigned to this bug.'
+  else
+    redirect_to @bug, alert: 'Unable to assign yourself to this bug.'
+  end
+end
+
 
   # def destroy
   #   @bug = Bug.find(params[:id])

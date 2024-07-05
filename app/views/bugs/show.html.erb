@@ -18,8 +18,13 @@
 }%>
 </p>
 <%end%>
+<% if @bug.developer_id.nil? %>
+<%= link_to 'Assign to me', assign_developer_bug_path(@bug), method: :patch, class: 'btn btn-primary', data: { confirm: 'Are you sure you want to assign this bug to yourself?' } %>
 
+<%else%>
+<p>Assigned to: <%= @bug.developer.email%></p>
 
+<%end%>
 
 <%= form_for @bug, url: bug_path(@bug), method: :patch do |f| %>
   <div class="form-group w-25">

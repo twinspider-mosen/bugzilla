@@ -1,10 +1,18 @@
 Rails.application.routes.draw do
+ require 'sidekiq/web'
+ mount Sidekiq::Web => '/sidekiq'
   root 'projects#index'
-
-  resources :projects
-
+  post "hello", to: 'projects#hello'
+  resources :projects do
+    collection do
+      get 'search'
+    end
+  end
+  # patch 'assign_developer', to: 'bugs#assign_developer'
   resources :bugs do
-   
+   member do
+      patch :assign_developer
+    end
   end
 
 devise_for :users, controllers: {

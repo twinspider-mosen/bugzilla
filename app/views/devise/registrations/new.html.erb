@@ -21,7 +21,7 @@
     <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
   </div>
 
-  <div class="field">
+  <div class="field w-25">
     <%= f.label :role %><br />
     <%= f.select :role, User.roles.keys.map { |role| [role.humanize, role] }, {}, class: 'form-control' %>
   </div>
