@@ -10,5 +10,19 @@ import 'utils/getOppositeVariationPlacement';
 import "controllers"
 import "bootstrap"
 
-import { Turbo } from "@hotwired/turbo-rails"
-Turbo.session.drive = true
+
+// $(document).ready(function(){
+//   var counter = 0;
+
+//   $('.project-select-input').on('click', function(){
+//     if ($(this).prop('checked')) {
+//       counter += 1;
+//       $('#delete-projects').css('display', 'block');
+//     } else {
+//       counter -= 1;
+//       if (counter <= 0) {
+//         $('#delete-projects').css('display', 'none');
+//       }
+//     }
+//   });
+// });

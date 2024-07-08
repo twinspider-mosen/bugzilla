@@ -1,21 +1,14 @@
 class ProjectMailer < ApplicationMailer
-default from: 'notifications@email.com'
+default from: 'no-reply@example.com'
   # Subject can be set in your I18n file at config/locales/en.yml
   # with the following lookup:
   #
-  #   en.project_mailer.new_project_mailer.subject
+  #   en.project_mailer.new_project_email.subject
   #
-  def new_project_email(user, project)
-   @user = user
-   @project = project
+  def new_project_email(usr, project)
+    @user = usr
+    @project = project
 
-   mail(
-    to: @user.email,
-    subject: "New Project #{project.title}"
-    )
-   do |format|
-      format.text { render plain: "New project: #{@project.title}" }
-      format.html { render html: "<strong>New project:</strong> #{@project.title}".html_safe }
-    end
+    mail(to: @user.email, subject: "New project : #{@project.title}")
   end
 end

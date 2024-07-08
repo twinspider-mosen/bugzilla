@@ -55,8 +55,9 @@ end
     end
   end
 def assign_developer
+    byebug
   @bug = Bug.find(params[:id]) # Use :id to fetch the bug record
-
+  
   if @bug.update(developer_id: current_user.id)
     redirect_to @bug, notice: 'You have been assigned to this bug.'
   else

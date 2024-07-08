@@ -17,8 +17,8 @@ class Ability
 
     elsif user.developer?
       can :read, Project
-      can :read, Bug
-      can :update, Bug
+      can :manage, Bug
+      cannot [:create, :delete], Bug
     end
 
     # Additional code can be added here for other roles or fallback permissions

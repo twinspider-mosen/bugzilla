@@ -1,23 +1,14 @@
 class ProjectsController < ApplicationController
+  include ProjectNotifier
   before_action :authenticate_user!
   load_and_authorize_resource
 
   def index
-    # @qas = User.where(role: 'qa')
     if current_user.manager?
       @projects = current_user.managed_projects
     else
       @projects = current_user.projects
   end
-
-    # @projects = current_user.managed_projects if current_user.manager?
-    # @projects = current_user.projects if current_user.qa?
-    # @projects = current_user.projects if current_user.developer?
-    # if current_user.developer?
-    #   redirect_to bugs_url
-    # end
-
-    # @projects = current_user.projects if current_user.developer?
   end
   def search
     @projects = if params[:query].present?
@@ -27,21 +18,8 @@ class ProjectsController < ApplicationController
                 end
     render :index
   end
-  #  def search
-  #   @projects = if params[:query].present?
-  #                 Project.where('title LIKE ?', "%#{params[:query]}%")
-  #               else
-  #                 Project.none
-  #               end
-
-  #   respond_to do |format|
-  #     format.html { render partial: 'search_results' } # Render the partial for HTML requests
-  #     format.js   # Render search.js.erb for JS requests
-  #   end
-  # end
-
+ 
   def show
-    # Load and authorize the specific project
     @project = Project.find(params[:id])
     @bugs = Bug.where(project_id: @project.id)
   end
@@ -85,16 +63,17 @@ class ProjectsController < ApplicationController
   end
 
   def destroy
-    # Load and authorize the specific project
-    @project = Project.find(params[:id])
-    @project.destroy
-
-    redirect_to root_path, notice: 'Project was successfully destroyed.'
-  end
-
+  @project = Project.find(params[:id])
+  @project.destroy
+  redirect_to root_path, notice: 'Project was successfully destroyed.'
+end  
+# def destroy_pr
+#   # @project = Project.find(params[:id])
+#   @project.destroy
+#   redirect_to root_path, notice: 'Project was successfully destroyed.'
+# end
 
    def update_project_assignments
-    # Remove project assignments for QAs not selected in the form
     existing_qa_ids = @project.user.where(role: 'qa').pluck(:id)
     selected_qa_ids = params[:project][:user_ids].map(&:to_i)
     removed_qa_ids = existing_qa_ids - selected_qa_ids

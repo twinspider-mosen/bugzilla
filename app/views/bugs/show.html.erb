@@ -11,18 +11,23 @@
 <p> <%= link_to "Edit", edit_bug_path(@bug)%></p>
 <% if !current_user.developer? %>
 <p>
-	 <%= link_to "Delete Bug", bug_path(@bug), data: {
-	turbo_method: :delete,
-	turbo_confirm: "Are you sure?"
 
-}%>
+  <%= button_to "Delete ", @project, method: :delete %>
+
 </p>
 <%end%>
+
+<% if current_user.developer? %>
 <% if @bug.developer_id.nil? %>
-<%= link_to 'Assign to me', assign_developer_bug_path(@bug), method: :patch, class: 'btn btn-primary', data: { confirm: 'Are you sure you want to assign this bug to yourself?' } %>
+<%# <%= link_to 'Assign to me', assign_developer_bug_path(@bug), method: :patch, class: 'btn btn-primary', data: { confirm: 'Are you sure you want to assign this bug to yourself?' } %> %>
+
+<%= button_to "Assign to me" , assign_developer_bug_path , method: :patch, class: 'btn btn-primary'%>
 
 <%else%>
-<p>Assigned to: <%= @bug.developer.email%></p>
+<<p>Assigned to: <%= @bug.developer.email%></p> 
+
+<%end%>
+
 
 <%end%>
 

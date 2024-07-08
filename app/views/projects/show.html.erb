@@ -10,11 +10,10 @@
 
 	<p> <%= link_to "Edit", edit_project_path(@project)%></p>
 <p>
-	 <%= link_to "Delete Project", project_path(@project), data: {
-	turbo_method: :delete,
-	turbo_confirm: "Are you sure?"
 
-}%>
+
+  <%= button_to "Delete ", @project, method: :delete %>
+
 </p>
 
 </p>

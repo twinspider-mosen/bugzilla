@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  # resources :books
+  # root "books#index"
  require 'sidekiq/web'
  mount Sidekiq::Web => '/sidekiq'
   root 'projects#index'
@@ -7,6 +9,7 @@ Rails.application.routes.draw do
     collection do
       get 'search'
     end
+
   end
   # patch 'assign_developer', to: 'bugs#assign_developer'
   resources :bugs do

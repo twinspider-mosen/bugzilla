@@ -71,6 +71,7 @@ gem 'cancancan'
 
 
 gem 'railties'
+gem 'byebug'
 
 
 
