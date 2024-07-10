@@ -1,0 +1,21 @@
+<nav class="navbar navbar-light bg-light">
+ 
+  <div class="container-fluid ">
+   <a class="navbar-brand" href="#">Bugzilla</a>
+<div class= "d-flex flex-row"><% if user_signed_in? %>
+<div class= "card d-flex flex-row p-2">
+  <strong>User: </strong>
+<%= current_user.email%>
+</div>
+<div><%= link_to "Edit" ,  edit_user_registration_path,  class: 'btn btn-dark ml-2' %></div>
+<div><%= link_to "Logout" , destroy_user_session_path, data: {turbo_method: "delete"}, class: 'btn btn-danger ml-2' %></div>
+<%else%>
+<%= link_to "Login" , new_user_session_path , class: 'btn btn-light'%>
+<%= link_to "Register" , new_user_registration_path , class: 'btn btn-dark ml-2'%>
+
+<%end%>
+
+</div>
+</div>
+
+</nav>

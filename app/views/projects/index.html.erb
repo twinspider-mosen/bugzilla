@@ -1,23 +1,69 @@
-
-<%= form_with url: search_projects_path, method: :get, local: true do %>
- <div class="form-group">
-    <%= label_tag :query, 'Search Projects' %>
-   <%= text_field_tag :query, params[:query], class: 'form-control' %>
+<div class="container">
+  <div class="card">
+  
+<div class="card-header">
+  <%= form_with url: search_projects_path, method: :get, local: true do %>
+ <div class="d-flex flex-row">
+  
+   <%= text_field_tag :query, params[:query], class: 'form-control' , placeholder: "Search Project"%>
+    <%= submit_tag 'Search', class: 'btn btn-primary ml-2' %>
  </div>
-  <%= submit_tag 'Search', class: 'btn btn-primary' %>
+ 
  <% end %>
 
-<br>
-<% if @projects.any? %>
-  <h2>Search Results</h2>
-  <ul>
-    <% @projects.each do |project| %>
-      <li><%= link_to project.title, project_path(project) %></li>
+</div>
+
+<div class="card-body">
+  
+<h2>Search Results</h2>
+<div class="container">
+  <% if @projects.any? %>
+  
+ 
+  
+
+      <table border="1">
+        <tr>
+          <th class="p-2">ID</th>
+          <th class="p-2">Title</th>
+          <th class="p-2">Description</th>
+          <th class="p-2">Action</th>
+        </tr>
+          <% @projects.each do |project| %>
+        <tr>
+          <td class="p-2">
+            <%= project.id%>
+          </td> 
+           <td class="p-2">
+            <%= project.title%>
+          </td> 
+           <td class="p-2">
+            <%= project.description%>
+          </td> 
+           <td>
+             <table class="nested-table">
+                    <tr class="p-2">
+                        <td >
+      <%= link_to "Show", project_path(project) , class: 'btn btn-info'%>
+    </td>  
+                        <td >    <%= link_to " Edit" , edit_project_path(project), class: 'btn btn-warning' %></td>
+                    
+                        <td>   <%= button_to "Destroy ", project, method: :delete , class: 'btn btn-danger'%></td>
+                    </tr>
+                </table>
+           
+          </td> 
+        </tr>
+     
+
+      <%# <li><%= link_to project.title, project_path(project) %>
+      <%# </li> %>
     <% end %>
-  </ul>
+  </table>
 <% else %>
   <p>No projects found</p>
 <% end %>
+</div>
 
 
 
@@ -28,6 +74,9 @@
 
 
 
-<%= link_to "New Project", new_project_path , class: 'btn btn-success'%>
+<%= link_to "New Project", new_project_path , class: 'btn btn-success my-4'%>
 
 <%end%>
+</div>
+</div>
+</div>

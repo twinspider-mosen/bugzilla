@@ -17,17 +17,15 @@
 <script src="https://code.jquery.com/jquery-3.7.1.slim.js" integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc=" crossorigin="anonymous"></script>
   </head>
 
-  <body class="container">
+  <body>
+     <%= render 'layouts/navbar' %>
     <% flash.each do |key, message| %>
   <div class="alert alert-<%= key %> alert-dismissible fade show" role="alert">
     <%= message %>
   </div>
 <% end %>
-
-     <% if user_signed_in? %>
-     <p> <strong>User:&nbsp;</strong><%= current_user.email %>&nbsp; <strong>Role:&nbsp;</strong><%= current_user.role %>&nbsp; </p>
-     <p><%=link_to "Edit Profile", edit_user_registration_path%>&nbsp; <%=link_to "Logout", destroy_user_session_path%></p>
-     <%end%> 
-    <%= yield %>
+  <div class="p-4"> 
+      <%= yield %>
+  </div>
   </body>
 </html>
